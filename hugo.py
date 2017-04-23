@@ -44,7 +44,7 @@ def flood():
 
 # Création de la fenêtre principale (main window)
 Mafenetre = Tk()
-Mafenetre.title('Cible')
+Mafenetre.title('mod1')
 
 # Image de fond
 # photo = PhotoImage(file="black.jpg")
@@ -55,7 +55,9 @@ Hauteur = 1000
 Canevas = Canvas(Mafenetre,width=Largeur, height=Hauteur)
 # item = Canevas.create_image(0,0,anchor=NW, image=photo)
 item = Canevas.create_rectangle(0,0,1000,1000,width=2,fill='black')
+poly = Canevas.create_polygon([160,45,175,20,190,45,175,70 ], width =2, fill = 'blue')
 print("Image de fond (item",item,")")
+print(poly)
 Canevas.pack()
 
 # Création d'un widget Button
