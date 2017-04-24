@@ -1,63 +1,78 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# import sys
-#
-# for av in sys.argv:
-# 	infile = open(av,"r")
-# 	for line in infile:
-# 		print line
-# 	infile.close()
-
+import sys
 from Tkinter import *
 import random
 
+def ft_atoi(astr):
+    num = 0
+    for c in astr:
+        if '0' <= c <= '9':
+            num  = num * 10 + ord(c) - ord('0')
+    return num
+
+env = []
+if (len(sys.argv) == 1):
+	raise SystemExit
+infile = open(sys.argv[1],"r")
+for line in infile:
+	new = []
+	for char in line:
+		if (char != ' ' and char != '\n' and char < '0' or char > '9'):
+			raise SystemExit
+		new.append(ft_atoi(char))
+	env.append(new)
+infile.close()
+# print env
+
 def rain():
     """ Dessine un cercle de centre (x,y) et de rayon r """
-    # x = random.randint(0,Largeur)
-    # y = random.randint(0,Hauteur)
-    # r = 10
-	#
-    # # on dessine un cercle dans la zone graphique
-    # item = Canevas.create_oval(x-r, y-r, x+r, y+r, outline='black', fill='black')
-	#
-    # print("Création du cercle (item" , item ,")")
-    # # affichage de tous les items de Canevas
-    # print(Canevas.find_all())
 
 def wave():
     """ Efface le dernier cercle"""
-    # if len(Canevas.find_all()) > 1:
-    #     item = Canevas.find_all()[-1]
-    #     # on efface le cercle
-    #     Canevas.delete(item)
-	#
-    #     print("Suppression du cercle (item" , item ,")")
-    #     # affichage de tous les items de Canevas
-    #     print(Canevas.find_all())
 
 def flood():
     """ Efface tous les cercles"""
-    # while len(Canevas.find_all()) > 1:
-    #     Undo()
-
 
 # Création de la fenêtre principale (main window)
 Mafenetre = Tk()
 Mafenetre.title('mod1')
 
-# Image de fond
-# photo = PhotoImage(file="black.jpg")
-
+envmin = 2000000000
+envmax = 0
 # Création d'un widget Canvas (zone graphique)
-Largeur = 1000
-Hauteur = 1000
-Canevas = Canvas(Mafenetre,width=Largeur, height=Hauteur)
-# item = Canevas.create_image(0,0,anchor=NW, image=photo)
-item = Canevas.create_rectangle(0,0,1000,1000,width=2,fill='black')
-poly = Canevas.create_polygon([160,45,175,20,190,45,175,70 ], width =2, fill = 'blue')
-print("Image de fond (item",item,")")
-print(poly)
+width = 1200
+height = 1200
+Canevas = Canvas(Mafenetre,width=width, height=height)
+item = Canevas.create_rectangle(0,0,width,height,width=2,fill='black')
+pts = [(0, height/2), (width/2, height-(height/3)), (width, height/2), (width/2, (height/3))]
+poly = Canevas.create_polygon(pts, width=3, fill='green')
+print(item, poly)
+# Canevas.create_line(150, 150, 300, 300, fill='red')
+for envx in env:
+	for envy in envx:
+		if envy < envmin:
+			envmin = envy
+		if envy > envmax:
+			envmax = envy
+scale = envmax - envmin
+idx = -10
+for envx in env:
+	idx += 10
+	idy = -10
+	for envy in envx:
+		idy += 10
+		if envy > scale/3:
+			color = 'blue'
+		elif envy > (scale/3)*2:
+			color = 'cyan'
+		else:
+			color = 'yellow'
+		Canevas.create_line(idx+490, idy+490, idx+500, idy+500, fill=color)
+		# if idx > 0 and idy > 0:
+		# 	Canevas.create_line(idx2+500, idy2+500, idx+500, idy+500, fill=color)
+
 Canevas.pack()
 
 # Création d'un widget Button
