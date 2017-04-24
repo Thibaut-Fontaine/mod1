@@ -12,6 +12,9 @@ def ft_atoi(astr):
             num  = num * 10 + ord(c) - ord('0')
     return num
 
+def printPixel(x, y, color, Canevas):
+        Canevas.create_rectangle(x, y, x + 2, y + 2, fill=color)
+
 env = []
 if (len(sys.argv) == 1):
 	raise SystemExit
@@ -69,8 +72,10 @@ for envx in env:
 			color = 'cyan'
 		else:
 			color = 'yellow'
-		Canevas.create_line(idx+490, idy+490, idx+500, idy+500, fill=color)
-		# if idx > 0 and idy > 0:
+		# Canevas.create_line(idx+490, idy+490, idx+500, idy+500, fill=color)
+                # Canevas.create_rectangle(100, 100, 102, 102, fill="red")
+		printPixel(50, 60, "blue", Canevas)
+                # if idx > 0 and idy > 0:
 		# 	Canevas.create_line(idx2+500, idy2+500, idx+500, idy+500, fill=color)
 
 Canevas.pack()
